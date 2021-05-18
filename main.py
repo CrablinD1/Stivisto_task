@@ -43,9 +43,10 @@ def process_video(request):
 
 
 def process_sound(request):
-    # Took algorithm from
-    # geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character
-
+    """
+    Took algorithm from
+    www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character
+    """
     content = request['content']
     freq = Counter(content)
 
@@ -63,20 +64,29 @@ if __name__ == "__main__":
         'video': 0,
         'sound': 0
     }
+
     for _ in range(10):
         request = get_random_request()
         print()
         print(request)
+        time_between_request = datetime.now() - request['ts']
         if request['type'] == 'text':
             count['text'] += 1
             print(process_text(request))
         elif request['type'] == 'image':
-            count['image'] += 1
-            print(process_image(request))
+            if time_between_request.days > 4:
+                pass
+            else:
+                count['image'] += 1
+                print(process_image(request))
         elif request['type'] == 'video':
-            count['video'] += 1
-            print(process_video(request))
+            if time_between_request.days > 4:
+                pass
+            else:
+                count['video'] += 1
+                print(process_video(request))
         elif request['type'] == 'sound':
             count['sound'] += 1
             print(process_sound(request))
-    print('\n', count)
+    print('\n', 'Total amount of all received requests by types:')
+    print(count)  # don't count ignored requests
