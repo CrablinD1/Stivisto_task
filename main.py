@@ -58,7 +58,7 @@ def process_sound(request):
 
 
 if __name__ == "__main__":
-    count = {
+    request_count = {
         'text': 0,
         'image': 0,
         'video': 0,
@@ -71,22 +71,22 @@ if __name__ == "__main__":
         print(request)
         time_between_request = datetime.now() - request['ts']
         if request['type'] == 'text':
-            count['text'] += 1
+            request_count['text'] += 1
             print(process_text(request))
         elif request['type'] == 'image':
             if time_between_request.days > 4:
                 pass
             else:
-                count['image'] += 1
+                request_count['image'] += 1
                 print(process_image(request))
         elif request['type'] == 'video':
             if time_between_request.days > 4:
                 pass
             else:
-                count['video'] += 1
+                request_count['video'] += 1
                 print(process_video(request))
         elif request['type'] == 'sound':
-            count['sound'] += 1
+            request_count['sound'] += 1
             print(process_sound(request))
     print('\n', 'Total amount of all received requests by types:')
-    print(count)  # don't count ignored requests
+    print(request_count)  # don't count ignored requests
