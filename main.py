@@ -24,6 +24,22 @@ def process_image(request):
         return datetime.timestamp(request_date - timedelta(days=1))
 
 
+def count_extension(extension, number):
+    if len(extension) == number:
+        return 'OK'
+    else:
+        return 'REJECT'
+
+
+def process_video(request):
+    request_date = request['ts']
+    content = request['content'].split('.')
+    if request_date.weekday() in range(5, 7):
+        return count_extension(content[1], 4)
+    else:
+        return count_extension(content[1], 3)
+
+
 if __name__ == "__main__":
     for _ in range(10):
         request = get_random_request()
@@ -32,3 +48,6 @@ if __name__ == "__main__":
             print(process_text(request))
         elif request['type'] == 'image':
             print(process_image(request))
+        elif request['type'] == 'video':
+            print(process_video(request))
+
